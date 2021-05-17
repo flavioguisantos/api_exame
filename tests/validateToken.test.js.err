@@ -1,0 +1,12 @@
+const validate = require('../bll/validate')
+
+test('Valida o token', async () => {
+    let resultAuthenticate = await validate.authenticate({
+        body: { user: '110677', password: '110677' }
+    })
+    let token = JSON.stringify(resultAuthenticate).replace(/"|{|}/g, '')
+    token = token.replace(':', ' ')
+    console.log(token)
+    let result = await validate.validateToken(token)
+    expect(result).toBe('authenticate')
+})

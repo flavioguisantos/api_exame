@@ -1,0 +1,8 @@
+const validate = require('../bll/validate')
+
+test('Verifica a criação de token', async () => {
+    let result = await validate.authenticate({
+        body: { user: '110677', password: '110677' }
+    })
+    expect('token' in result).toBe(true)
+})
