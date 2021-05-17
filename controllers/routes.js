@@ -20,7 +20,7 @@ routes.post(
         body('codigo_amostra')
             .notEmpty()
             .withMessage('O campo codigo_amostra é obrigatório'),
-        body('codigo_amostra').isLength({ max: 8 }),
+        body('codigo_amostra').isLength({ max: 8 }).withMessage('O codigo_amostra aceita no máximo 8 caracteres'),
         body('cocaina').notEmpty().withMessage('O campo cocaina é obrigatório'),
         body('anfetamina')
             .notEmpty()
