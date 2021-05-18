@@ -9,7 +9,7 @@
   <br>
   <br>
 Criei essa <strong>API Rest</strong> 
-rapidamente, gostaria de ter tido mais tempo para fazer alguns ajustes e criar mais testes unitários. Durante a semana pretendo deixarei 100%</strong>.
+rapidamente, gostaria de ter tido mais tempo para fazer alguns ajustes e criar mais testes unitários. Logo deixarei 100%</strong>.
 </p>
 <br>
 
@@ -33,7 +33,7 @@ rapidamente, gostaria de ter tido mais tempo para fazer alguns ajustes e criar m
 <img src="https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white" height="25"/>
 
 </p>
-Para acessar a AIP, deve ser chamada a rota: [https://exameflavio.herokuapp.com/oapi/authenticate], usando o verbo POST, passando como parametro { "user": "110677", "password": "110677" },
+Para acessar a AIP, deve ser chamada a rota: [https://exameflavio.herokuapp.com/oapi/authenticate], usando o verbo POST, passando como parâmetro { "user": "110677", "password": "110677" },
 será retornado um Token. <br>
 
 <br>
@@ -43,10 +43,10 @@ será retornado um Token. <br>
 <br>
 <br>
 Atráves da rota POST [https://exameflavio.herokuapp.com/api/resultInsert], juntamente com o token gerado, passamos o [Authorization Bearer: token] 
-e os parametros de entrada para inserir e validar o valores.
+e os parâmetros de entrada para inserir e validar o valores.
 <br>
 <br>
-Parametros de entrada:
+Parâmetros de entrada:
 <br>
 
 {
@@ -145,7 +145,7 @@ Teremos como retorno um JSON com o a validação dessa amostra, exemplo:
 <br>
 
 Atráves da rota POST [https://exameflavio.herokuapp.com/api/listResult], juntamente com o token gerado, passamos o [Authorization Bearer: token] <br>
-com o parametro [codigo_amostra: "000"] a API retorna o resultado desse codigo_amostra. <br>  Se não passarmos parametros algum, a API retorna uma lista TOP 100 das amostras cadastradas com seus resultados.
+com o parâmetro [codigo_amostra: "000"] a API retorna o resultado desse codigo_amostra. <br>  Se não passarmos parâmetros algum, a API retorna uma lista TOP 100 das amostras cadastradas com seus resultados.
 
 <p align = "center">
 
