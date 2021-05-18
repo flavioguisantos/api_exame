@@ -1,7 +1,7 @@
 const mysql = require('mysql2/promise')
 require('dotenv').config()
 
-async function connectDB() {
+const connectDB = async () => {
     if (global.connection && global.connection.state !== 'disconnected') {
         return global.connection
     }

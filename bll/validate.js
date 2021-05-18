@@ -1,19 +1,16 @@
 const IdalExame = require('../model/IdalExame')
 const dalExame = require('../model/dalExame')
 const jwt = require('jsonwebtoken')
+const { body, validationResult } = require('express-validator')
 require('dotenv').config()
 const JWTsecret = 'exameFlavioGuilherme'
-const { body } = require('express-validator')
-const { validationResult } = require('express-validator')
 
-async function insertValidate(req, res) {
-    console.log(params)
-
+const insertValidate = async (req, res) => {
     const listResult = await IdalExame.resultInsert(params)
     return listResult
 }
 
-async function listResultValidate(req, res) {
+const listResultValidate = async (req, res) => {
     if (req.body.codigo_amostra) {
         //retorna o registro com base no id
         const codigo_amostra = req.body.codigo_amostra
@@ -37,10 +34,10 @@ const processingAllSearch = (listResult) => {
     return Promise.all(promise).then((r) => r)
 }
 
-async function authenticate(req, res) {
+const authenticate = async (req, res) => {
     if (req.body.user == undefined || req.body.password == undefined) {
         res.send({
-            err: "Parametros inválidos, esperado: {user: '', password: ''}"
+            err: "Parâmetros inválidos, esperado: {user: '', password: ''}"
         })
     } else {
         const resultAuthenticate = await IdalExame.authenticate(
@@ -49,7 +46,7 @@ async function authenticate(req, res) {
         )
         if (resultAuthenticate.status == 'authenticated') {
             res.send({
-                token: await jwt.sign(
+                token: jwt.sign(
                     {
                         id: resultAuthenticate.id,
                         user: resultAuthenticate.user
@@ -64,7 +61,7 @@ async function authenticate(req, res) {
     }
 }
 
-async function validateToken(params) {
+const validateToken = async (params) => {
     if (params != undefined) {
         const bearer = params.split(' ')
         var token = bearer[1]
@@ -81,7 +78,7 @@ async function validateToken(params) {
     return resultValidate
 }
 
-async function auth(req, res, next) {
+const auth = async (req, res, next) => {
     const authToken = req.headers['authorization']
     const result = await validateToken(authToken)
     if (result == 'authenticate') {
@@ -120,9 +117,58 @@ const processingSearch = async (params) => {
     return [params['codigo_amostra'], result]
 }
 
-const processingExame = async (params) => {
-    await IdalExame.resultInsert(params)
-    return processingSearch(params)
+const processingExame = async (req, res) => {
+    await IdalExame.resultInsert(req.body)
+    res.send(processingSearch(req.body))
+}
+
+const insertValidationRules = () => {
+    return [
+        //validação dos dados
+        body('codigo_amostra')
+            .notEmpty()
+            .withMessage('O campo codigo_amostra é obrigatório'),
+        body('codigo_amostra')
+            .isLength({ max: 8 })
+            .withMessage('O codigo_amostra aceita no máximo 8 caracteres'),
+        body('cocaina').notEmpty().withMessage('O campo cocaina é obrigatório'),
+        body('anfetamina')
+            .notEmpty()
+            .withMessage('O campo anfetamina é obrigatório'),
+        body('metanfetamina')
+            .notEmpty()
+            .withMessage('O campo metanfetamina é obrigatório'),
+        body('mda').notEmpty().withMessage('O campo mda é obrigatório'),
+        body('mdma').notEmpty().withMessage('O campo mdma é obrigatório'),
+        body('thc').notEmpty().withMessage('O campo thc é obrigatório'),
+        body('morfina')
+            .notEmpty()
+            .withMessage('O campo morfiona é obrigatório'),
+        body('codeina').notEmpty().withMessage('O campo codeina é obrigatório'),
+        body('heroina').notEmpty().withMessage('O campo heroina é obrigatório'),
+        body('benzoilecgonina')
+            .notEmpty()
+            .withMessage('O campo benzoilecgonina é obrigatório'),
+        body('cocaetileno')
+            .notEmpty()
+            .withMessage('O campo cocaetileno é obrigatório'),
+        body('norcocaina')
+            .notEmpty()
+            .withMessage('O campo norcocaina é obrigatório')
+    ]
+}
+
+const validate = (req, res, next) => {
+    const errors = validationResult(req)
+    if (errors.isEmpty()) {
+        return next()
+    }
+    const extractedErrors = []
+    errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }))
+
+    return res.status(422).json({
+        errors: extractedErrors
+    })
 }
 
 module.exports = {
@@ -132,5 +178,7 @@ module.exports = {
     validateToken,
     auth,
     processingExame,
-    processingSearch
+    processingSearch,
+    insertValidationRules,
+    validate
 }

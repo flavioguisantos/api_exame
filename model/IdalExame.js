@@ -1,17 +1,11 @@
 const db = require('./dalExame')
 const bcrypt = require('bcryptjs')
 
-async function resultWhere(id) {
-    let result = await db.searchWhere(id)
-    return result
-}
+const resultWhere = async (id) => await db.searchWhere(id)
 
-async function resultFull() {
-    let result = await db.searchFull()
-    return result
-}
+const resultFull = async () => await db.searchFull()
 
-async function resultInsert(params) {
+const resultInsert = async (params) => {
     const result = await db.insertExame(params)
     if (result && result.affectedRows) {
         return params
@@ -20,7 +14,7 @@ async function resultInsert(params) {
     }
 }
 
-async function authenticate(user, password) {
+const authenticate = async (user, password) => {
     let resultDb = await db.authenticate(user, password)
     const result = resultDb[0]
     if (result) {

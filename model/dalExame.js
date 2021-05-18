@@ -1,7 +1,7 @@
 const connection = require('./connection')
 
 // retorna os registros conforme o codigo_amostra
-async function searchWhere(id) {
+const searchWhere = async (id) => {
     const conn = await connection()
     const sql = 'SELECT * FROM resultExame WHERE codigo_amostra = ?'
     const result = await conn.query(sql, id)
@@ -14,7 +14,7 @@ async function searchWhere(id) {
 }
 
 // retorna os 100 primeiros registros
-async function searchFull() {
+const searchFull = async () => {
     const conn = await connection()
     const result = await conn.query(
         'SELECT * FROM resultExame ORDER BY id ASC LIMIT 100'
@@ -28,7 +28,7 @@ async function searchFull() {
 }
 
 // insere um registro
-async function insertExame(values) {
+const insertExame = async (values) => {
     const {
         codigo_amostra,
         cocaina,
@@ -72,7 +72,7 @@ async function insertExame(values) {
 }
 
 // faz autenticação do usuário
-async function authenticate(user, password) {
+const authenticate = async (user, password) => {
     const conn = await connection()
     const sql = 'SELECT * FROM users WHERE user = ?'
     const result = await conn.query(sql, user)
@@ -83,7 +83,7 @@ async function authenticate(user, password) {
     }
 }
 
-async function searchCorte() {
+const searchCorte = async () => {
     const conn = await connection()
     const result = await conn.query('SELECT * FROM corte')
 
