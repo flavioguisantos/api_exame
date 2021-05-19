@@ -46,8 +46,8 @@ const insertExame = async (values) => {
     } = values
 
     const conn = await connection()
-    const sql = `INSERT INTO resultExame (codigo_amostra, cocaina, anfetamina, metanfetamina, mda, mdma, thc, morfina, codeina, heroina, benzoilecgonina, cocaetileno, norcocaina) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);`
-    //const result = await conn.query(sql, values)
+    const sql = `INSERT IGNORE INTO resultExame (codigo_amostra, cocaina, anfetamina, metanfetamina, mda, mdma, thc, morfina, codeina, heroina, benzoilecgonina, cocaetileno, norcocaina) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);`
+
     const result = await conn.query(sql, [
         codigo_amostra,
         cocaina,
@@ -77,7 +77,7 @@ const authenticate = async (user, password) => {
     const sql = 'SELECT * FROM users WHERE user = ?'
     const result = await conn.query(sql, user)
     try {
-        return result[0]
+        return result[0][0]
     } catch (error) {
         return error
     }

@@ -118,8 +118,12 @@ const processingSearch = async (params) => {
 }
 
 const processingExame = async (req, res) => {
-    await IdalExame.resultInsert(req.body)
-    res.send(processingSearch(req.body))
+    let result = await IdalExame.resultInsert(req.body)
+    if (result == 'success') {
+        res.send(await processingSearch(req.body))
+    } else {
+        res.send({ err: 'Já existe amostra cadastrada com esse código!' })
+    }
 }
 
 const insertValidationRules = () => {

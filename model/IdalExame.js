@@ -7,16 +7,16 @@ const resultFull = async () => await db.searchFull()
 
 const resultInsert = async (params) => {
     const result = await db.insertExame(params)
-    if (result && result.affectedRows) {
-        return params
+    if (result.insertId != 0) {
+        return 'success'
     } else {
-        return null
+        return 'fail'
     }
 }
 
 const authenticate = async (user, password) => {
     let resultDb = await db.authenticate(user, password)
-    const result = resultDb[0]
+    const result = resultDb
     if (result) {
         var correct = bcrypt.compareSync(password, result.password)
         if (correct) {
