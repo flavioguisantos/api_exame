@@ -7,7 +7,7 @@ const searchWhere = async (id) => {
     const result = await conn.query(sql, id)
 
     try {
-        return result[0]
+        return result[0][0]
     } catch (error) {
         return error
     }
@@ -88,7 +88,7 @@ const searchCorte = async () => {
     const result = await conn.query('SELECT * FROM corte')
 
     try {
-        return result[0]
+        return result[0][0]
     } catch (error) {
         return error
     }

@@ -15,7 +15,7 @@ const listResultValidate = async (req, res) => {
         //retorna o registro com base no id
         const codigo_amostra = req.body.codigo_amostra
         const result = await IdalExame.resultWhere(codigo_amostra)
-        const resultProcess = await processingSearch(result[0])
+        const resultProcess = await processingSearch(result)
         res.send(resultProcess)
     } else {
         // retorna a lista com top 100
@@ -90,7 +90,7 @@ const auth = async (req, res, next) => {
 
 const processingSearch = async (params) => {
     const corte = await dalExame.searchCorte()
-    const valueCorte = corte[0]
+    const valueCorte = corte
     let result = {}
 
     Object.keys(params).map((keyRequest) => {
